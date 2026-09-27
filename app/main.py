@@ -1,11 +1,11 @@
 from fastapi import FastAPI
+from app.api.v1.router import router as v1_router
 
-app=FastAPI()
+def create_app() -> FastAPI:
+    app = FastAPI(title="Event Driver orders",version="1.0.0")
+    #Mount V1 API routes 
+    app.include_router(v1_router,prefix="/api/v1")
 
-@app("/")
-def read_root():
-    return {"Hello":"world"}
+    return app
 
-@app("/items/{item_id}")
-def read_item(item_id: int | None=None):
-    return {"item_id":item_id}
+app = create_app()
